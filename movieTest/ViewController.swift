@@ -12,6 +12,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
 
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet var assetURLswitch: UISwitch!
     @IBOutlet var playButton: UIButton!
     
     // MARK: - Life Cycle
@@ -38,8 +39,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             imagePickerController.dismiss(animated: true, completion: nil)
         }
 
-        videoURL = info["UIImagePickerControllerReferenceURL"] as? URL
-//        videoURL = info["UIImagePickerControllerMediaURL"] as? URL
+        if assetURLswitch.isOn {
+            videoURL = info["UIImagePickerControllerReferenceURL"] as? URL
+        } else {
+            videoURL = info["UIImagePickerControllerMediaURL"] as? URL
+        }
 
         guard let url = videoURL else { return }
         print(url)

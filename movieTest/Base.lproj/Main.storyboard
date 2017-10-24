@@ -47,20 +47,42 @@
                                     <action selector="playMovie:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oee-Tg-oQV"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="assetURL" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJh-ID-zEZ">
+                                <rect key="frame" x="137" y="605" width="100" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="9Sg-zI-ZbM"/>
+                                    <constraint firstAttribute="width" constant="100" id="VUk-GR-bfr"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uBq-K4-q67">
+                                <rect key="frame" x="240" y="600" width="49" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="47" id="3EJ-ja-HwO"/>
+                                    <constraint firstAttribute="height" constant="31" id="KC5-Ob-Lpk"/>
+                                </constraints>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="dJh-ID-zEZ" firstAttribute="centerX" secondItem="Vdl-Cr-RG4" secondAttribute="centerX" id="8PJ-GU-R2I"/>
                             <constraint firstItem="Vdl-Cr-RG4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="142" id="BJZ-57-TPv"/>
+                            <constraint firstItem="uBq-K4-q67" firstAttribute="leading" secondItem="dJh-ID-zEZ" secondAttribute="trailing" constant="3" id="MXk-ea-3fl"/>
                             <constraint firstItem="P99-bm-4Wg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="80" id="Mfq-Ti-KDE"/>
                             <constraint firstItem="sUv-OP-Bx8" firstAttribute="top" secondItem="Vdl-Cr-RG4" secondAttribute="bottom" constant="50" id="Nko-Qg-7Zu"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="sUv-OP-Bx8" secondAttribute="trailing" constant="80" id="PPa-WY-Ql0"/>
                             <constraint firstItem="P99-bm-4Wg" firstAttribute="top" secondItem="Vdl-Cr-RG4" secondAttribute="bottom" constant="50" id="Sly-ba-SD5"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Vdl-Cr-RG4" secondAttribute="trailing" constant="16" id="bGF-1E-Nxp"/>
+                            <constraint firstItem="dJh-ID-zEZ" firstAttribute="top" secondItem="Vdl-Cr-RG4" secondAttribute="bottom" constant="100" id="qgh-AQ-Pwv"/>
+                            <constraint firstItem="uBq-K4-q67" firstAttribute="centerY" secondItem="dJh-ID-zEZ" secondAttribute="centerY" id="tPO-xi-a4T"/>
                             <constraint firstItem="Vdl-Cr-RG4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="y5a-Ky-Xv4"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="assetURLswitch" destination="uBq-K4-q67" id="xzI-Fz-ncD"/>
                         <outlet property="imageView" destination="Vdl-Cr-RG4" id="yOg-EO-oG1"/>
                         <outlet property="playButton" destination="sUv-OP-Bx8" id="hgE-1l-hdi"/>
                     </connections>
