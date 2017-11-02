@@ -5,26 +5,21 @@ import AVFoundation
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     let imagePickerController = UIImagePickerController()
-    var videoURL: URL? {
-        didSet {
-            playButton.isEnabled = videoURL != nil
-        }
-    }
+    var videoURL: URL?
 
-    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet var assetURLswitch: UISwitch!
-    @IBOutlet var playButton: UIButton!
+    @IBOutlet weak var fileUrlLabel: UILabel!
+    @IBOutlet weak var assetUrlLabel: UILabel!
     
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.contentMode = .scaleAspectFit
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        playButton.isEnabled = videoURL != nil
+        updateLabel()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -35,39 +30,36 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     // MARK: - UIImagePickerControllerDelegate
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        defer {
-            imagePickerController.dismiss(animated: true, completion: nil)
-        }
-
         if assetURLswitch.isOn {
-            videoURL = info["UIImagePickerControllerReferenceURL"] as? URL
+            videoURL = info["UIImagePickerControllerReferenceURL"] as? URL // iOS11 で deprecated
         } else {
             videoURL = info["UIImagePickerControllerMediaURL"] as? URL
         }
 
-        guard let url = videoURL else { return }
-        print(url)
-
-        if let i = previewImageFromVideo(url) {
-            imageView.image = i
+        let completion: () -> () = { [weak self] in
+            guard let url = self?.videoURL else { return }
+            print(url)
+            self?.playMovie(url)
         }
+
+        imagePickerController.dismiss(animated: true, completion: completion)
     }
     
     // MARK: - Private
 
-    // 動画からサムネイルを生成
-    fileprivate func previewImageFromVideo(_ url: URL) -> UIImage? {
-        let asset = AVAsset(url:url)
-        let imageGenerator = AVAssetImageGenerator(asset:asset)
-        imageGenerator.appliesPreferredTrackTransform = true
-        var time = asset.duration
-        time.value = min(time.value,2)
-        do {
-            let imageRef = try imageGenerator.copyCGImage(at: time, actualTime: nil)
-            return UIImage(cgImage: imageRef)
-        } catch {
-            return nil
+    fileprivate func playMovie(_ url: URL) {
+        let player = AVPlayer(url: url)
+        let playerViewController = AVPlayerViewController()
+        playerViewController.player = player
+        
+        present(playerViewController, animated: true){
+            playerViewController.player?.play()
         }
+    }
+    
+    fileprivate func updateLabel() {
+        fileUrlLabel.isHidden = assetURLswitch.isOn
+        assetUrlLabel.isHidden = !assetURLswitch.isOn
     }
     
     // MARK: - IB Action
@@ -79,16 +71,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         imagePickerController.mediaTypes = ["public.movie"] // 動画のみ表示
         present(imagePickerController, animated: true, completion: nil)
     }
-    
-    @IBAction func playMovie(_ sender: Any) {
-        guard let url = videoURL else { return }
 
-        let player = AVPlayer(url: url)
-        let playerViewController = AVPlayerViewController()
-        playerViewController.player = player
-
-        present(playerViewController, animated: true){
-            playerViewController.player?.play()
-        }
+    @IBAction func switched(_ sender: Any) {
+        updateLabel()
     }
 }
